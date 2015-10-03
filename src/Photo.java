@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -7,13 +8,13 @@ import java.util.ArrayList;
 public class Photo {
     String description;
     String date;
-    Image img;
+    ImageIcon img;
 
     public Photo(){
 
     }
 
-    public Photo(String description, String date, Image img){
+    public Photo(String description, String date, ImageIcon img){
         this.description = description;
         this.date = date;
         this.img = img;

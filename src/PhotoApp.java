@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.ImagingOpException;
 
 /**
  * Created by Nick on 10/2/15.
@@ -14,17 +15,26 @@ public class PhotoApp extends JFrame {
 
         Container contentPane = getContentPane(); //set contentPane for container
         contentPane.setPreferredSize(new Dimension(700, 700));
+        PhotoHandler handler = new PhotoHandler();
 
-        JPanel imgPanel = new JPanel(); //panel to house images
+        //panel to house images
+        JLabel imageLabel = new JLabel("", SwingConstants.CENTER);
+        JScrollPane scrollPane = new JScrollPane(imageLabel);
+        scrollPane.setPreferredSize(new Dimension(500,500));
+
+        ImageIcon icon = new ImageIcon("Images/starwars.jpg");
+        imageLabel.setIcon(icon);
 
 
         //panel to house the image information
         JPanel imgDescPanel = new JPanel();
 
         JLabel description = new JLabel("Description:");
+        JTextArea descArea = new JTextArea(4,20);
 
         imgDescPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         imgDescPanel.add(description);
+        imgDescPanel.add(descArea);
 
 
         //Panel configuration to handle navigation buttons
@@ -39,7 +49,7 @@ public class PhotoApp extends JFrame {
         navPanel.add(nextBtn);
 
         //Add panels to Container and set layout
-        contentPane.add(imgPanel, BorderLayout.NORTH);
+        contentPane.add(scrollPane, BorderLayout.NORTH);
         contentPane.add(imgDescPanel, BorderLayout.CENTER);
         contentPane.add(navPanel, BorderLayout.SOUTH);
 
