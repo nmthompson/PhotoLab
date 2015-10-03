@@ -13,7 +13,7 @@ public class PhotoApp extends JFrame {
     public PhotoApp(){
 
         Container contentPane = getContentPane(); //set contentPane for container
-        contentPane.setPreferredSize(new Dimension(500, 700));
+        contentPane.setPreferredSize(new Dimension(700, 700));
 
         JPanel imgPanel = new JPanel(); //panel to house images
 
