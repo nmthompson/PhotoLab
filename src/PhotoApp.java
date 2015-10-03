@@ -14,19 +14,19 @@ public class PhotoApp extends JFrame {
     public PhotoApp(){
 
         Container contentPane = getContentPane(); //set contentPane for container
-        contentPane.setPreferredSize(new Dimension(700, 700));
+        contentPane.setPreferredSize(new Dimension(700, 650));
+
         PhotoHandler handler = new PhotoHandler();
 
         //panel to house images
         JLabel imageLabel = new JLabel("", SwingConstants.CENTER);
         JScrollPane scrollPane = new JScrollPane(imageLabel);
-        scrollPane.setPreferredSize(new Dimension(500,500));
+        scrollPane.setPreferredSize(new Dimension(500, 500));
 
-        ImageIcon icon = new ImageIcon("Images/starwars.jpg");
+        ImageIcon icon = new ImageIcon("Images/starwars.jpg"); //not sure what to do with images
         imageLabel.setIcon(icon);
 
-
-        //panel to house the image information
+        //panel to house the image description
         JPanel imgDescPanel = new JPanel();
 
         JLabel description = new JLabel("Description:");
@@ -36,21 +36,39 @@ public class PhotoApp extends JFrame {
         imgDescPanel.add(description);
         imgDescPanel.add(descArea);
 
+        //panel to house the image date
+        JPanel imgDatePanel = new JPanel();
+
+        JLabel date = new JLabel("Date: ");
+        JTextArea dateArea = new JTextArea(1,5);
+
+        imgDatePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        imgDatePanel.add(date);
+        imgDatePanel.add(dateArea);
+
 
         //Panel configuration to handle navigation buttons
         JPanel navPanel = new JPanel();
 
-        JButton prevBtn = new JButton("Previous");
+        JButton prevBtn = new JButton("< Previous");
         prevBtn.addActionListener(new PhotoEventHandler());
-        JButton nextBtn = new JButton("Next");
+        JButton nextBtn = new JButton("Next >");
         prevBtn.addActionListener(new PhotoEventHandler());
 
+        JTextArea numOfPhotos = new JTextArea();
+        numOfPhotos.setPreferredSize(new Dimension(20, 20));
+
+        JLabel totPhoto = new JLabel("of " + handler.getNumPhotos());
+
+        navPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        navPanel.add(numOfPhotos);
+        navPanel.add(totPhoto);
         navPanel.add(prevBtn);
         navPanel.add(nextBtn);
 
         //Add panels to Container and set layout
         contentPane.add(scrollPane, BorderLayout.NORTH);
-        contentPane.add(imgDescPanel, BorderLayout.CENTER);
+        contentPane.add(imgDescPanel, BorderLayout.WEST);
         contentPane.add(navPanel, BorderLayout.SOUTH);
 
 
