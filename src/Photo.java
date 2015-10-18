@@ -1,47 +1,100 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
  * Created by Nick on 10/2/15.
  */
-public class Photo {
-    String description;
-    String date;
-    ImageIcon img;
+public class Photo implements Serializable{
 
-    public Photo(){
+    private String date;
+    private String description;
+    private ImageIcon image;
+
+    public Photo() {
 
     }
 
-    public Photo(String description, String date, ImageIcon img){
-        this.description = description;
-        this.date = date;
-        this.img = img;
+    public void setImage(String filename) {
+        image = new ImageIcon(filename);
+    }
+
+    public ImageIcon getImage() {
+        return image;
+    }
+
+    public void setDescription(String desc) {
+        description = desc;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDate(String dt) {
+        date = dt;
+    }
+
+    public String getDate() {
+        return date;
     }
 }
-class PhotoHandler{
+
+class PhotoDBHandler implements Serializable{
+
+    private static final long serialVersionUID = -2066891379292164622L;
+
 
     ArrayList<Photo> photoList = new ArrayList<Photo>();
 
-    public void getPhoto(){
+    PhotoDBHandler(){
+        try{
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("photos.ser"));
+            oos.writeObject(photoList);
+            oos.close();
+
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(("photos.ser")));
+            photoList = (ArrayList<Photo>)ois.readObject();
+            ois.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Photo getCurrPhoto(int k){
+        return photoList.get(k);
+
     }
     public int getNumPhotos(){
 
         return photoList.size();
     }
-    public void addPhoto(Photo newPhoto){
-        photoList.add(newPhoto);
-    }
-    public void deletePhoto(Photo photo){
-        photoList.remove(photo);
+    public void addPhoto(ImageIcon newPhoto){
+        Photo img = new Photo();
+        img.setImage(newPhoto.toString());
+        img.setDate("Enter Date...");
+        img.setDescription("Enter Description...");
+        photoList.add(img);
     }
 
-    //getPhoto
-    //getNumPhotos
-    //addPhoto
-    //deletePhoto
-    //saveAll?
+    public void deletePhoto(int k){
+        photoList.remove(k);
+    }
+    public void saveAll() throws IOException{
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("photos.ser"));
+            oos.writeObject(photoList);
+            oos.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
 
 
 }
